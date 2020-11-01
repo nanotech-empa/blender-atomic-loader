@@ -44,8 +44,8 @@ Clone this repository and open Blender. The library can be loaded using `importl
 import importlib.util
  
 spec = importlib.util.spec_from_file_location("blender_atomic_loader", "$PATH_TO_Blender_atomic_loader/blender_atomic_loader.py")
-baloader = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(baloader)
+bloader = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(bloader)
 ```
 
 Simply copy and paste the lines above in your Blender's python console (changing the correct to the git folder) and you will be able to use the functions need to parse atomic structures and draw the corresponding objects from the command line. N.B: always use `bloader.` before the function's name:
@@ -65,7 +65,47 @@ molecule=bloader.get_molecule(frame)
 
 ## Example usage
 
-Follow this simple example to render an image of a small molecule.
+Follow this simple example to render an image of a triangulene molecule on gold (C33H240Au896.xyz).
+
+Load the xyz:
+
+```python
+# Import ASE and Numpy
+from ase.io import read
+import numpy as np
+
+# Read an example system
+frame=read('C33H240Au896.xyz')
+```
+
+Get the molecule and create the spheres corresponding to the carbon atoms:
+
+```python
+# Extract the molecule only
+molecule=baloader.get_molecule(frame)
+
+# Draw only the carbons with the desired radious
+bloader.draw_type(molecule,'C',0.2)
+```
+
+It is recommeded to set the origin at the object's centre (`Object > Set Origin > Origin to Geometry`):
+
+![Origin to geometry](.imgs_readme/origin_to_geometry.png)
+
+It is also recommended to group all the atoms of the same specie under a new collection:
+
+![New collection](.imgs_readme/new_collection.png)
+
+Now we can add a new material:
+
+* select an atom
+* add the desired material
+* select all the carbon atoms (`Right click on the collection > Select objects`) paying attention that the active atom is the one for which we added the material (the active atom should be in yellow, the others selcted atoms will be orange)
+* `CTRL-L > Make Links > Materials`:
+
+![Link Materials](.imgs_readme/link_materials.png)
+
+The same can be done for the hydrogen, using a smaller radious and using a different material.
 
 ## Possible issues
 
