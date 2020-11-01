@@ -49,7 +49,7 @@ baloader = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(baloader)
 ```
 
-Simply copy and paste the lines above in your Blender's python console (changing the correct to the git folder) and you will be able to use the functions need to parse atomic structures and draw the corresponding objects from the command line. ***N.B:*** always use `bloader.` before the function's name:
+Simply copy and paste the lines above in your Blender's python console (changing the correct to the git folder) and you will be able to use the functions need to parse atomic structures and draw the corresponding objects from the command line. N.B: always use `bloader.` before the function's name:
 
 
 ```
@@ -61,5 +61,17 @@ import numpy as np
 frame=read('example.pdb')
 
 # Extract the molecule and discard the substrate
-molecule=bloader.get_bonds()
+molecule=bloader.get_molecule(frame)
+```
+
+## Example usage
+
+Follow this simple example to render an image of a small molecule.
+
+## Possible issues
+
+When rendering from a laptop it can happen that the memory is not enough to render the image. The first suggestion is to remove all the atoms not visble from the camera view and the second is to render the image from the command line, without using the GUI (even better if you ssh to a larger machine with blender installed!):
+
+```
+blender -b test.blend -o output_name -f 1
 ```
