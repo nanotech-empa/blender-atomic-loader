@@ -105,7 +105,30 @@ Now we can add a new material:
 
 ![Link Materials](.imgs_readme/link_materials.png)
 
-The same can be done for the hydrogen, using a smaller radious and using a different material.
+The same can be done for hydrogens, using a smaller radious (0.08 in this example) and a different material.
+
+If all the spheres corresponding the molecule atoms have been added, we can move on and draw the bonds. We can use the function `split_bonds()` to distinguish between bonds involving hydrogens or not:
+
+```python
+# Get the bonds and split those involving hydrogens
+# An optional argument is the cutoff length (Defauls=1.5 Angstrom) 
+b_hydr,b_backb=bloader.split_bonds(molecule)
+```
+
+In this way we can have some contro on the style of different bonds. Let's draw the bonds involving H atoms:
+
+```python
+# Loop through each bond pair
+for bond in b_hydr:
+    # we need to pass to the function the coordinates of the two ends and the radious
+    baloader.cylinder_between(molecule[bond[0]].position,molecule[bond[1]].position,0.11)
+```
+
+As before, on should group the bonds into a collection and the material. In this example I use the same materials as for hydrogen spheres.
+
+Also is important to smooth the surface through `Object > Shade Smooth`:
+
+![Shade Smooth](.imgs_readme/shade_smooth.png)
 
 ## Possible issues
 
