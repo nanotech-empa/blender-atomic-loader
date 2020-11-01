@@ -16,7 +16,7 @@ The first step is too check what Pyhton version Blender comes with. To check thi
 
 The idea is to install ase using pip in a local virtual environment having the same exact version of Python as Blender:
 
-```
+```bash
 $ pyenv virtualenv 3.8.5 ase
 $ pyenv local ase
 $ pip install ase
@@ -24,9 +24,8 @@ $ pip install ase
 
 If this works ou smoothly, we can proceed copying the necessary modules to your local Blender path:
 
-cp -r /home/piero/.local/lib/python3.8/site-packages/ase ~/.config/blender/2.83/scripts/modules
 
-```
+```bash
 $ mkdir ~/.config/blender/2.90/scripts/modules
 $ cp -r $PATH_VIRTUALENV/lib/python3.8/site-packages/ase ~/.config/blender/2.90/scripts/modules
 $ cp -r $PATH_VIRTUALENV/lib/python3.8/site-packages/scipy ~/.config/blender/2.90/scripts/modules
@@ -41,7 +40,7 @@ Everything should work now. You can remove the local virtual environment, open b
 
 Clone this repository and open Blender. The library can be loaded using `importlib`:
 
-```
+```python
 import importlib.util
  
 spec = importlib.util.spec_from_file_location("blender_atomic_loader", "$PATH_TO_Blender_atomic_loader/blender_atomic_loader.py")
@@ -52,7 +51,7 @@ spec.loader.exec_module(baloader)
 Simply copy and paste the lines above in your Blender's python console (changing the correct to the git folder) and you will be able to use the functions need to parse atomic structures and draw the corresponding objects from the command line. N.B: always use `bloader.` before the function's name:
 
 
-```
+```python
 # Import ASE and Numpy
 from ase.io import read
 import numpy as np
@@ -72,6 +71,6 @@ Follow this simple example to render an image of a small molecule.
 
 When rendering from a laptop it can happen that the memory is not enough to render the image. The first suggestion is to remove all the atoms not visble from the camera view and the second is to render the image from the command line, without using the GUI (even better if you ssh to a larger machine with blender installed!):
 
-```
+```bash
 blender -b test.blend -o output_name -f 1
 ```
