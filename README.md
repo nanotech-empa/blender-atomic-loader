@@ -1,12 +1,14 @@
 # Blender Atomic Loader
 
-This is a simple library that allows to load atomic data into blender using ASE and draw spheres for atoms and cylinders for bonds. This README is meant to be a rimender for myself on how to setup blender with ASE, and how to use Blender to render a simple PDB or XYZ (or anything supported by ASE).
+This is a simple library that allows to load atomic data into blender using ASE and draw spheres for atoms and cylinders for bonds. This README is meant to be a rimender for myself on how to setup blender with ASE, and how to use Blender to render a simple PDB or XYZ (or anything supported by ASE). 
+
+The functions in here are pretty simple and most of them are meant for 2D systems made by a metal substrate with a molecule on top. However, this is just an example and can easily be extend to work with other systems.
 
 **All this have been tested with Blender 2.83 and Blender 2.90**
 
-## Requirements
+## Importing ASE from Blender
 
-To load atomic structures from a PDB (or XYZ) file ASE is need. Blender has an internal python interpreter which has nothing to do with that of the system, thus we need to it manually.
+To load atomic structures from a PDB (or XYZ) file [ASE](https://wiki.fysik.dtu.dk/ase/) is need. ASE is an extremely useful library to manipulate atomic data. Unfortunately, Blender has an internal python interpreter which has nothing to do with that of the system, thus we have to add ASE manually.
 
 The first step is too check what Pyhton version Blender comes with. To check this, just start Blender and open the Python console:
 
@@ -35,3 +37,29 @@ Everything should work now. You can remove the local virtual environment, open b
 
 ![Test ASE import](.imgs_readme/test_ase_import.png)
 
+## Importing this library from Blender
+
+Clone this repository and open Blender. The library can be loaded using `importlib`:
+
+```
+import importlib.util
+ 
+spec = importlib.util.spec_from_file_location("blender_atomic_loader", "$PATH_TO_Blender_atomic_loader/blender_atomic_loader.py")
+baloader = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(baloader)
+```
+
+Simply copy and paste the lines above in your Blender's python console (changing the correct to the git folder) and you will be able to use the functions need to parse atomic structures and draw the corresponding objects from the command line. ***N.B:*** always use `bloader.` before the function's name:
+
+
+```
+# Import ASE and Numpy
+from ase.io import read
+import numpy as np
+
+# Read an example system
+frame=read('example.pdb')
+
+# Extract the molecule and discard the substrate
+molecule=bloader.get_bonds()
+```
