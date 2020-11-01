@@ -124,11 +124,17 @@ for bond in b_hydr:
     baloader.cylinder_between(molecule[bond[0]].position,molecule[bond[1]].position,0.11)
 ```
 
-As before, on should group the bonds into a collection and the material. In this example I use the same materials as for hydrogen spheres.
+As before, on should group the bonds into a collection and the material. In this example I use the same material as for hydrogen spheres.
 
 Also is important to smooth the surface through `Object > Shade Smooth`:
 
 ![Shade Smooth](.imgs_readme/shade_smooth.png)
+
+Again, the same can be done for Carbons, changing the cylinder radious (0.2 in this example) and the material.
+
+Finally we can add the substrate drawing also gold atoms and then we can render the image. Here I am useing Cycle Render and HDRI lighting:
+
+![Shade Smooth](.imgs_readme/result.png)
 
 ## Possible issues
 
