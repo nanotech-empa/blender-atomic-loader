@@ -22,11 +22,11 @@ $ pyenv local ase
 $ pip install ase
 ```
 
-If this works ou smoothly, we can proceed copying the necessary modules to your local Blender path:
+If this works out smoothly, we can proceed copying the necessary modules to your local Blender path:
 
 
 ```bash
-$ mkdir ~/.config/blender/2.90/scripts/modules
+$ mkdir -p ~/.config/blender/2.90/scripts/modules
 $ cp -r $PATH_VIRTUALENV/lib/python3.8/site-packages/ase ~/.config/blender/2.90/scripts/modules
 $ cp -r $PATH_VIRTUALENV/lib/python3.8/site-packages/scipy ~/.config/blender/2.90/scripts/modules
 $ cp -r $PATH_VIRTUALENV/lib/python3.8/site-packages/scipy.libs ~/.config/blender/2.90/scripts/modules
