@@ -1,44 +1,43 @@
 # Blender Atomic Loader
 
-This is a simple library that allows to load atomic data into blender using ASE and draw spheres for atoms and cylinders for bonds. This README is meant to be a rimender for myself on how to setup blender with ASE, and how to use Blender to render a simple PDB or XYZ (or anything supported by ASE). 
+This is a simple library that allows to load atomic data into blender using ASE and draw spheres for atoms and cylinders for bonds. This README is meant to show how to use Blender to render a simple PDB or XYZ (or anything supported by ASE). 
 
 The functions in here are pretty simple and most of them are meant for 2D systems made by a metal substrate with a molecule on top. However, this is just an example and can easily be extend to work with other systems.
 
-**All this have been tested with Blender 2.83 and Blender 2.90**
+**All this have been tested with Blender 2.90**
 
-## Importing ASE from Blender
+## Installing ASE to Blender
 
-To load atomic structures from a PDB (or XYZ) file [ASE](https://wiki.fysik.dtu.dk/ase/) is need. ASE is an extremely useful library to manipulate atomic data. Unfortunately, Blender has an internal python interpreter which has nothing to do with that of the system, thus we have to add ASE manually.
+To load atomic structures from a PDB (or XYZ) file, the [atomistic simulation environment (ASE)](https://wiki.fysik.dtu.dk/ase/) python library is needed. Blender has an internal python environment, where the ASE library needs to be installed.
 
-The first step is too check what Pyhton version Blender comes with. To check this, just start Blender and open the Python console:
+A simple way to do this is the following:
 
-![Python version for Blender 2.90](.imgs_readme/python_version.png)
+1) run Blender with elevated privileges (run as administrator/sudo);
+2) open a "Text Editor" (Shift F11) and create an empty script ("+ New")
+3) Copy and paste the following the editor:
+```python
+import subprocess
+import sys
+import os
 
-The idea is to install ase using pip in a local virtual environment having the same exact version of Python as Blender:
+# path to python.exe
+python_exe = os.path.join(sys.prefix, 'bin', 'python.exe')
 
-```bash
-$ pyenv virtualenv 3.8.5 ase
-$ pyenv local ase
-$ pip install ase
+# install and upgrade pip
+subprocess.call([python_exe, "-m", "ensurepip"])
+subprocess.call([python_exe, "-m", "pip", "install", "--upgrade", "pip"])
+
+# install required packages
+subprocess.call([python_exe, "-m", "pip", "install", "ase"])
 ```
-
-If this works out smoothly, we can proceed copying the necessary modules to your local Blender path:
-
-
-```bash
-$ mkdir -p ~/.config/blender/2.90/scripts/modules
-$ cp -r $PATH_VIRTUALENV/lib/python3.8/site-packages/ase ~/.config/blender/2.90/scripts/modules
-$ cp -r $PATH_VIRTUALENV/lib/python3.8/site-packages/scipy ~/.config/blender/2.90/scripts/modules
-$ cp -r $PATH_VIRTUALENV/lib/python3.8/site-packages/scipy.libs ~/.config/blender/2.90/scripts/modules
-```
-
-Everything should work now. You can remove the local virtual environment, open blender and load ase:
+4) Run the script (button with an arrow) and wait
+5) To confirm that ASE if available, open the internal python console (Shift F4) and try `import ase`
 
 ![Test ASE import](.imgs_readme/test_ase_import.png)
 
-## Importing this library from Blender
+## Importing `blender_atomic_loader` from Blender
 
-Clone this repository and open Blender. The library can be loaded using `importlib`:
+Clone or download this repository and open Blender. The library can be loaded using `importlib`:
 
 ```python
 import importlib.util
