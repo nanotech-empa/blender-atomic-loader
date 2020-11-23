@@ -30,7 +30,7 @@ subprocess.call([python_exe, "-m", "pip", "install", "--upgrade", "pip"])
 # install required packages
 subprocess.call([python_exe, "-m", "pip", "install", "ase"])
 ```
-4) Run the script (button with an arrow) and wait
+4) Run the script (button with an arrow/Alt P) and wait
 5) To confirm that ASE is available, open the internal python console (Shift F4) and try `import ase`
 
 ![Test ASE import](.imgs_readme/test_ase_import.png)
