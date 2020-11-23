@@ -4,7 +4,7 @@ This is a simple library that allows to load atomic data into blender using ASE 
 
 The functions in here are pretty simple and most of them are meant for 2D systems made by a metal substrate with a molecule on top. However, this is just an example and can easily be extend to work with other systems.
 
-**All this have been tested with Blender 2.90**
+**The following guide has been tested with Blender 2.90**
 
 ## Installing ASE to Blender
 
@@ -14,7 +14,7 @@ A simple way to do this is the following:
 
 1) run Blender with elevated privileges (run as administrator/sudo);
 2) open a "Text Editor" (Shift F11) and create an empty script ("+ New")
-3) Copy and paste the following the editor:
+3) Copy and paste the following in the editor:
 ```python
 import subprocess
 import sys
@@ -31,7 +31,7 @@ subprocess.call([python_exe, "-m", "pip", "install", "--upgrade", "pip"])
 subprocess.call([python_exe, "-m", "pip", "install", "ase"])
 ```
 4) Run the script (button with an arrow) and wait
-5) To confirm that ASE if available, open the internal python console (Shift F4) and try `import ase`
+5) To confirm that ASE is available, open the internal python console (Shift F4) and try `import ase`
 
 ![Test ASE import](.imgs_readme/test_ase_import.png)
 
