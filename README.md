@@ -36,7 +36,7 @@ subprocess.call([python_exe, "-m", "pip", "install", "git+https://github.com/nan
 4) Run the script (button with an arrow/`Alt P`) and wait
 5) To confirm that the library is available, open the internal python console (`Shift F4`) and try `import ase`, `import blender_atomic_loader`. Restarting Blender might be needed.
 
-![Test ASE import](.imgs_readme/test_ase_import.png)
+![Test imports](.imgs_readme/test_imports.png)
 
 ## Example usage
 
