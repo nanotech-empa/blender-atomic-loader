@@ -6,15 +6,15 @@ The functions in here are pretty simple and most of them are meant for 2D system
 
 **The following guide has been tested with Blender 2.90**
 
-## Installing ASE to Blender
+## Installing the library
 
-To load atomic structures from a PDB (or XYZ) file, the [atomistic simulation environment (ASE)](https://wiki.fysik.dtu.dk/ase/) python library is needed. Blender has an internal python environment, where the ASE library needs to be installed.
+Blender comes with a internal python environment, where the library and it's dependencies (such as `ase`) need to be installed.
 
 A simple way to do this is the following:
 
 1) run Blender with elevated privileges (run as administrator/sudo);
-2) open a "Text Editor" (Shift F11) and create an empty script ("+ New")
-3) Copy and paste the following in the editor:
+2) open a "Text Editor" (`Shift F11`) and create an empty script (`+ New`)
+3) Copy and paste the following in the editor (select either Option 1 or 2 by commenting/uncommenting):
 ```python
 import subprocess
 import sys
@@ -27,11 +27,14 @@ python_exe = os.path.join(sys.prefix, 'bin', 'python.exe')
 subprocess.call([python_exe, "-m", "ensurepip"])
 subprocess.call([python_exe, "-m", "pip", "install", "--upgrade", "pip"])
 
-# install required packages
-subprocess.call([python_exe, "-m", "pip", "install", "ase"])
+# Option 1: install directly from github
+subprocess.call([python_exe, "-m", "pip", "install", "git+https://github.com/nanotech-empa/blender-atomic-loader.git#egg=blender-atomic-loader"])
+
+# Option 2 (developers): install from local source (e.g. from a git clone)
+#subprocess.call([python_exe, "-m", "pip", "install", "-e", "path/to/blender-atomic-loader"])
 ```
-4) Run the script (button with an arrow/Alt P) and wait
-5) To confirm that ASE is available, open the internal python console (Shift F4) and try `import ase`
+4) Run the script (button with an arrow/`Alt P`) and wait
+5) To confirm that the library is available, open the internal python console (`Shift F4`) and try `import ase`, `import blender_atomic_loader`. Restarting Blender might be needed.
 
 ![Test ASE import](.imgs_readme/test_ase_import.png)
 
@@ -69,9 +72,11 @@ Follow this simple example to render an image of a triangulene molecule on gold 
 Load the xyz:
 
 ```python
-# Import ASE and Numpy
+# Import libraries
 from ase.io import read
 import numpy as np
+
+import blender_atomic_loader as bloader
 
 # Read an example system
 frame=read('C33H240Au896.xyz')
@@ -81,7 +86,7 @@ Get the molecule and create the spheres corresponding to the carbon atoms:
 
 ```python
 # Extract the molecule only
-molecule=baloader.get_molecule(frame)
+molecule=bloader.get_molecule(frame)
 
 # Draw only the carbons with the desired radious
 bloader.draw_type(molecule,'C',0.2)
