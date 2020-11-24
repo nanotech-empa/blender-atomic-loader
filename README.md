@@ -38,33 +38,6 @@ subprocess.call([python_exe, "-m", "pip", "install", "git+https://github.com/nan
 
 ![Test ASE import](.imgs_readme/test_ase_import.png)
 
-## Importing `blender_atomic_loader` from Blender
-
-Clone or download this repository and open Blender. The library can be loaded using `importlib`:
-
-```python
-import importlib.util
- 
-spec = importlib.util.spec_from_file_location("blender_atomic_loader", "$PATH_TO_Blender_atomic_loader/blender_atomic_loader.py")
-bloader = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(bloader)
-```
-
-Simply copy and paste the lines above in your Blender's python console (changing the correct to the git folder) and you will be able to use the functions need to parse atomic structures and draw the corresponding objects from the command line. N.B: always use `bloader.` before the function's name:
-
-
-```python
-# Import ASE and Numpy
-from ase.io import read
-import numpy as np
-
-# Read an example system
-frame=read('example.pdb')
-
-# Extract the molecule and discard the substrate
-molecule=bloader.get_molecule(frame)
-```
-
 ## Example usage
 
 Follow this simple example to render an image of a triangulene molecule on gold (C33H240Au896.xyz).
