@@ -4,7 +4,13 @@ This is a simple library that allows to load atomic data into blender using ASE 
 
 The functions in here are pretty simple and most of them are meant for 2D systems made by a metal substrate with a molecule on top. However, this is just an example and can easily be extend to work with other systems.
 
-**The following guide has been tested with Blender 2.90**
+**The following guide has been tested with Blender 2.90 and above. It should work for Blender 2.83 as well.**
+
+## Downloading Blender
+
+We suggest to download the last Blender version directly from the official [Blender download page](https://www.blender.org/download/).
+
+![Download](.imgs_readme/downlad_blender.png)
 
 ## Installing the library
 
