@@ -10,7 +10,7 @@ The functions in here are pretty simple and most of them are meant for 2D system
 
 We suggest to download the last Blender version directly from the official [Blender download page](https://www.blender.org/download/).
 
-![Download](.imgs_readme/downlad_blender.png)
+![Download](.imgs_readme/download_blender.png)
 
 ## Installing the library
 
@@ -21,13 +21,19 @@ A simple way to do this is the following:
 1) run Blender with elevated privileges (run as administrator/sudo);
 2) open a "Text Editor" (`Shift F11`) and create an empty script (`+ New`)
 3) Copy and paste the following in the editor (select either Option 1 or 2 by commenting/uncommenting):
+
 ```python
 import subprocess
 import sys
 import os
 
-# path to python.exe
+# Option 1: path to the python executable. 
+# !! This will only work downloading Blender directly from the official website !! 
+# python_exe = sys.executable
+
+# Option 2 (Windows): path to python.exe
 python_exe = os.path.join(sys.prefix, 'bin', 'python.exe')
+
 
 # install and upgrade pip
 subprocess.call([python_exe, "-m", "ensurepip"])
