@@ -28,12 +28,9 @@ import sys
 import os
 
 # Get the pathe to the python executable
-
-# Linux users: !! This will only work downloading Blender directly from the official website !! 
-# python_exe = sys.executable
-
-# Windows users: 
-python_exe = os.path.join(sys.prefix, 'bin', 'python.exe')
+# For Linux users this will only work when downloading Blender directly from the official website. 
+exe_name=[string for string in os.listdir(sys.prefix+'/bin/') if 'python' in string][0]
+python_exe = os.path.join(sys.prefix, 'bin', exe_name)
 
 
 # install and upgrade pip
