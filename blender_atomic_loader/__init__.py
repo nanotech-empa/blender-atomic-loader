@@ -340,7 +340,7 @@ def split_bonds(aseframe,cutoff=1.5):
 
 def draw_atoms(aseframe, atom_type):
     import numpy as np
-    # draw ths spheres for a specific atom type
+    # draw spheres for a specific atom type
     for pos in aseframe[np.where(np.asarray(aseframe.get_chemical_symbols())==atom_type)[0]].positions:
         create_sphere(pos=pos, 
                       diameter=default_properties[atom_type]["diameter"], 
@@ -348,3 +348,11 @@ def draw_atoms(aseframe, atom_type):
                       mat_name=atom_type, 
                       colour=default_properties[atom_type]["colour"]
                       )
+        
+def draw_molecule(aseframe):
+    import numpy as np
+    
+    atom_types = list(set(aseframe.get_chemical_symbols()))
+    
+    for atom_type in atom_types:
+        draw_atoms(aseframe, atom_type)

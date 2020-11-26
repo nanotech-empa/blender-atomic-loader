@@ -59,7 +59,7 @@ Load the xyz:
 from ase.io import read
 import numpy as np
 
-import blender_atomic_loader as bloader
+import blender_atomic_loader as bl
 
 # Read an example system
 frame=read('C33H240Au896.xyz')
@@ -69,59 +69,28 @@ Get the molecule and create the spheres corresponding to the carbon atoms:
 
 ```python
 # Extract the molecule only
-molecule=bloader.get_molecule(frame)
+molecule=bl.get_molecule(frame)
 
-# Draw only the carbons
-bloader.draw_atoms(molecule,'C')
+# Draw the molecule 
+bloader.draw_molecule(molecule,'C')
 ```
 
-It is recommeded to set the origin at the object's centre (`Object > Set Origin > Origin to Geometry`):
-
-![Origin to geometry](.imgs_readme/origin_to_geometry.png)
-
-It is also recommended to group all the atoms of the same specie under a new collection:
-
-![New collection](.imgs_readme/new_collection.png)
-
-Now we can add a new material:
-
-* select an atom
-* add the desired material
-* select all the carbon atoms (`Right click on the collection > Select objects`) paying attention that the active atom is the one for which we added the material (the active atom should be in yellow, the others selcted atoms will be orange)
-* `CTRL-L > Make Links > Materials`:
-
-![Link Materials](.imgs_readme/link_materials.png)
-
-The same can be done for hydrogens, using a smaller radious (0.08 in this example) and a different material.
-
-If all the spheres corresponding the molecule atoms have been added, we can move on and draw the bonds. We can use the function `split_bonds()` to distinguish between bonds involving hydrogens or not:
+Add the substrate by drawing gold atoms:
 
 ```python
-# Get the bonds and split those involving hydrogens
-# An optional argument is the cutoff length (Defauls=1.5 Angstrom) 
-b_hydr,b_backb=bloader.split_bonds(molecule)
+# Draw only Gold atoms 
+bloader.draw_atoms(frame,'Au')
 ```
 
-In this way we can have some contro on the style of different bonds. Let's draw the bonds involving H atoms:
-
-```python
-# Loop through each bond pair
-for bond in b_hydr:
-    # we need to pass to the function the coordinates of the two ends and the radious
-    baloader.cylinder_between(molecule[bond[0]].position,molecule[bond[1]].position,0.11)
-```
-
-As before, on should group the bonds into a collection and the material. In this example I use the same material as for hydrogen spheres.
-
-Also is important to smooth the surface through `Object > Shade Smooth`:
-
-![Shade Smooth](.imgs_readme/shade_smooth.png)
-
-Again, the same can be done for Carbons, changing the cylinder radious (0.2 in this example) and the material.
-
-Finally we can add the substrate drawing also gold atoms and then we can render the image. Here I am useing Cycle Render and HDRI lighting:
+Finally, adjust the camera view and lighting and eventually render the image by pressing ('F12'). Here an example using Cycle Render and HDRI lighting:
 
 ![Shade Smooth](.imgs_readme/result.png)
+
+A few things to note:
+
+* it is recommended to group atoms of the same type under a new collection. Do this select a group of atoms, type (`m`) and click on (`New Collection`)
+* by default we use the CPK colour scheme combined with a standard reflective material. One can manually change or add new materials. An intersting add-on with loads of cool materials is [the materials VX library](https://www.youtube.com/watch?v=EHq39AmRU3Q)
+* if you add a new material and assign it to a specific object you can propagate the to other objects by selecting the target objects and then `CTRL-L > Make Links > Materials`.
 
 ## Possible issues
 
