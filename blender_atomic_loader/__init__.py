@@ -1,4 +1,64 @@
-def create_sphere(pos, diameter, atom_name="Atom", mat_name="Material", colour=(1,0,0,1)):
+default_colour = (0.0129016, 0.0129016, 0.0129016, 1)
+default_diameter = 0.25
+
+
+
+def create_basic_material(mat_name="Material", colour=default_colour):
+    import bpy
+    import bmesh
+    import mathutils
+        
+    # Switch to Cycles 
+    bpy.context.scene.render.engine = 'CYCLES'
+    
+    # check whether the material already exists
+    if bpy.data.materials.get(mat_name):
+        mat = bpy.data.materials[mat_name]
+    else:
+        # create the material
+        mat = bpy.data.materials.new(mat_name)
+        mat.diffuse_color = colour # viewport color RGBA
+        mat.use_nodes = True
+    
+        # get the material nodes
+        nodes = mat.node_tree.nodes
+        
+        # clear all nodes to start clean
+        for node in nodes:
+            nodes.remove(node)
+        
+        # create glossy node
+        node_glossy = nodes.new(type='ShaderNodeBsdfGlossy')
+        node_glossy.inputs[0].default_value = (1,1,1,1)  # RGBA
+        node_glossy.inputs[1].default_value = 0.223 # roughness
+        node_glossy.location = -200,100
+        
+        # create diffuse node
+        node_diffuse = nodes.new(type='ShaderNodeBsdfDiffuse')
+        node_diffuse.inputs[0].default_value = colour  # RGBA
+        node_diffuse.inputs[1].default_value = 0.202 # roughness
+        node_diffuse.location = -200,-100
+        
+        # create mix shader node
+        node_mix = nodes.new(type='ShaderNodeMixShader')
+        node_mix.inputs[0].default_value = 0.925
+        node_mix.location = 0,0
+        
+        # create output node
+        node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+        node_output.location = 200,0
+        
+        # link nodes
+        links = mat.node_tree.links
+        link_diff_mix = links.new(node_diffuse.outputs[0], node_mix.inputs[2])
+        link_gloss_mix = links.new(node_glossy.outputs[0], node_mix.inputs[1])
+        
+        # link mix to output node
+        link_mix_out = links.new(node_mix.outputs[0], node_output.inputs[0])
+    
+    return mat
+
+def create_sphere(pos, diameter=default_diameter, atom_name="Atom", mat_name="Material", colour=default_colour):
     import bpy
     import bmesh
     import mathutils
@@ -34,52 +94,7 @@ def create_sphere(pos, diameter, atom_name="Atom", mat_name="Material", colour=(
     # bpy.ops.object.move_to_collection(collection_index=0, is_new=True, new_collection_name=atom_name)
     
     ### Refine the material
-    
-    # check whether the material already exists
-    if bpy.data.materials.get(mat_name):
-        mat = bpy.data.materials[mat_name]
-    else:
-        # create the material
-        mat = bpy.data.materials.new(mat_name)
-        mat.diffuse_color = colour # viewport color RGBA
-        mat.use_nodes = True
-    
-        # get the material nodes
-        nodes = mat.node_tree.nodes
-        
-        # clear all nodes to start clean
-        for node in nodes:
-            nodes.remove(node)
-        
-        # create glossy node
-        node_glossy = nodes.new(type='ShaderNodeBsdfGlossy')
-        node_glossy.inputs[0].default_value = (1,1,1,1)  # RGBA
-        node_glossy.inputs[1].default_value = 0.223 # roughness
-        node_glossy.location = -200,100
-        
-        # create diffuse node
-        node_diffuse = nodes.new(type='ShaderNodeBsdfDiffuse')
-        node_diffuse.inputs[0].default_value = colour  # RGBA
-        node_diffuse.inputs[1].default_value = 0.202 # roughness
-        node_diffuse.location = -200,-100
-        
-        # create mix shader node
-        node_mix = nodes.new(type='ShaderNodeMixShader')
-        node_mix.inputs[0].default_value = 0.925
-        node_mix.location = 0,0
-        
-        # create output node
-        node_output = nodes.new(type='ShaderNodeOutputMaterial')   
-        node_output.location = 200,0
-        
-        # link nodes
-        links = mat.node_tree.links
-        link_diff_mix = links.new(node_diffuse.outputs[0], node_mix.inputs[2])
-        link_gloss_mix = links.new(node_glossy.outputs[0], node_mix.inputs[1])
-        
-        # link mix to output node
-        link_mix_out = links.new(node_mix.outputs[0], node_output.inputs[0])
-    
+    mat = create_basic_material(mat_name=mat_name, colour=colour)
     
     # Assign it to the context object
     obj = bpy.context.active_object
@@ -92,11 +107,12 @@ def create_sphere(pos, diameter, atom_name="Atom", mat_name="Material", colour=(
         obj.data.materials.append(mat)
     
     
-def cylinder_between(point1, point2, radius, mat_name="Material", colour=(1,0,0,1)):
+def cylinder_between(point1, point2, diameter=default_diameter, mat_name="Material", colour=default_colour):
       
     import math
     import bpy
     import bmesh
+    
     
     x1=point1[0]
     y1=point1[1]
@@ -112,7 +128,7 @@ def cylinder_between(point1, point2, radius, mat_name="Material", colour=(1,0,0,
     
     bpy.ops.mesh.primitive_cylinder_add(
         vertices = 32, 
-        radius = radius, 
+        radius = diameter,
         depth = dist,
         location = (dx/2 + x1, dy/2 + y1, dz/2 + z1)   
     ) 
@@ -131,52 +147,7 @@ def cylinder_between(point1, point2, radius, mat_name="Material", colour=(1,0,0,
     bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='MEDIAN')
 
     ### Refine the material
-    
-    # check whether the material already exists
-    if bpy.data.materials.get(mat_name):
-        mat = bpy.data.materials[mat_name]
-    else:
-        # create the material
-        mat = bpy.data.materials.new(mat_name)
-        mat.diffuse_color = colour # viewport color RGBA
-        mat.use_nodes = True
-    
-        # get the material nodes
-        nodes = mat.node_tree.nodes
-        
-        # clear all nodes to start clean
-        for node in nodes:
-            nodes.remove(node)
-        
-        # create glossy node
-        node_glossy = nodes.new(type='ShaderNodeBsdfGlossy')
-        node_glossy.inputs[0].default_value = (1,1,1,1)  # RGBA
-        node_glossy.inputs[1].default_value = 0.223 # roughness
-        node_glossy.location = -200,100
-        
-        # create diffuse node
-        node_diffuse = nodes.new(type='ShaderNodeBsdfDiffuse')
-        node_diffuse.inputs[0].default_value = colour  # RGBA
-        node_diffuse.inputs[1].default_value = 0.202 # roughness
-        node_diffuse.location = -200,-100
-        
-        # create mix shader node
-        node_mix = nodes.new(type='ShaderNodeMixShader')
-        node_mix.inputs[0].default_value = 0.925
-        node_mix.location = 0,0
-        
-        # create output node
-        node_output = nodes.new(type='ShaderNodeOutputMaterial')   
-        node_output.location = 200,0
-        
-        # link nodes
-        links = mat.node_tree.links
-        link_diff_mix = links.new(node_diffuse.outputs[0], node_mix.inputs[2])
-        link_gloss_mix = links.new(node_glossy.outputs[0], node_mix.inputs[1])
-        
-        # link mix to output node
-        link_mix_out = links.new(node_mix.outputs[0], node_output.inputs[0])
-    
+    mat = create_basic_material(mat_name=mat_name, colour=colour)
     
     # Assign it to the context object
     obj = bpy.context.active_object
