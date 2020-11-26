@@ -27,7 +27,7 @@ import subprocess
 import sys
 import os
 
-# Option 1: path to the python executable. 
+# Option 1 (Linux): path to the python executable. 
 # !! This will only work downloading Blender directly from the official website !! 
 # python_exe = sys.executable
 
