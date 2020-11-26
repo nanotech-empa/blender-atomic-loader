@@ -18,7 +18,7 @@ Blender comes with a internal python environment, where the library and it's dep
 
 A simple way to do this is the following:
 
-1) run Blender with elevated privileges (run as administrator/sudo);
+1) Only for Windows users: run Blender **with elevated privileges** (run as administrator);
 2) open a "Text Editor" (`Shift F11`) and create an empty script (`+ New`)
 3) Copy and paste the following in the editor (select either Option 1 or 2 by commenting/uncommenting):
 
@@ -27,11 +27,12 @@ import subprocess
 import sys
 import os
 
-# Option 1 (Linux): path to the python executable. 
-# !! This will only work downloading Blender directly from the official website !! 
+# Get the pathe to the python executable
+
+# Linux users: !! This will only work downloading Blender directly from the official website !! 
 # python_exe = sys.executable
 
-# Option 2 (Windows): path to python.exe
+# Windows users: 
 python_exe = os.path.join(sys.prefix, 'bin', 'python.exe')
 
 
