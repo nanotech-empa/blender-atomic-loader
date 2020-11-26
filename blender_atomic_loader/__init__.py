@@ -1,11 +1,11 @@
-def create_sphere(pos, diameter):
+def create_sphere(pos, diameter, atom_name="Atom", mat_name="Material", colour=(1,0,0,1)):
     import bpy
     import bmesh
     import mathutils
     
     # Create an empty mesh and the object.
-    mesh = bpy.data.meshes.new('Basic_Sphere')
-    basic_sphere = bpy.data.objects.new("Basic_Sphere", mesh)
+    mesh = bpy.data.meshes.new(atom_name)
+    basic_sphere = bpy.data.objects.new(atom_name, mesh)
     
     # Add the object into the scene.
     bpy.context.collection.objects.link(basic_sphere)
@@ -19,42 +19,175 @@ def create_sphere(pos, diameter):
 
     # create a location matrix
     mat_loc = mathutils.Matrix.Translation(pos)
-    bmesh.ops.create_uvsphere(bm, u_segments=32, v_segments=16, diameter=diameter, matrix=mat_loc)
+    bmesh.ops.create_uvsphere(bm, u_segments=18, v_segments=16, diameter=diameter, matrix=mat_loc)
     bm.to_mesh(mesh)
     bm.free()
     
+    # smooth the surface
     bpy.ops.object.modifier_add(type='SUBSURF')
     bpy.ops.object.shade_smooth()
 
-def cylinder_between(point1, point2, radius):
-  
+    # put the origin to the geometry
+    bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='MEDIAN')
+
+    # move the obeject to a collection
+    # bpy.ops.object.move_to_collection(collection_index=0, is_new=True, new_collection_name=atom_name)
+    
+    ### Refine the material
+    
+    # check whether the material already exists
+    if bpy.data.materials.get(mat_name):
+        mat = bpy.data.materials[mat_name]
+    else:
+        # create the material
+        mat = bpy.data.materials.new(mat_name)
+        mat.diffuse_color = colour # viewport color RGBA
+        mat.use_nodes = True
+    
+        # get the material nodes
+        nodes = mat.node_tree.nodes
+        
+        # clear all nodes to start clean
+        for node in nodes:
+            nodes.remove(node)
+        
+        # create glossy node
+        node_glossy = nodes.new(type='ShaderNodeBsdfGlossy')
+        node_glossy.inputs[0].default_value = (1,1,1,1)  # RGBA
+        node_glossy.inputs[1].default_value = 0.223 # roughness
+        node_glossy.location = -200,100
+        
+        # create diffuse node
+        node_diffuse = nodes.new(type='ShaderNodeBsdfDiffuse')
+        node_diffuse.inputs[0].default_value = colour  # RGBA
+        node_diffuse.inputs[1].default_value = 0.202 # roughness
+        node_diffuse.location = -200,-100
+        
+        # create mix shader node
+        node_mix = nodes.new(type='ShaderNodeMixShader')
+        node_mix.inputs[0].default_value = 0.925
+        node_mix.location = 0,0
+        
+        # create output node
+        node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+        node_output.location = 200,0
+        
+        # link nodes
+        links = mat.node_tree.links
+        link_diff_mix = links.new(node_diffuse.outputs[0], node_mix.inputs[2])
+        link_gloss_mix = links.new(node_glossy.outputs[0], node_mix.inputs[1])
+        
+        # link mix to output node
+        link_mix_out = links.new(node_mix.outputs[0], node_output.inputs[0])
+    
+    
+    # Assign it to the context object
+    obj = bpy.context.active_object
+    
+    if obj.data.materials:
+        # assign to 1st material slot
+        obj.data.materials[0] = mat
+    else:
+        # no slots
+        obj.data.materials.append(mat)
+    
+    
+def cylinder_between(point1, point2, radius, mat_name="Material", colour=(1,0,0,1)):
+      
     import math
     import bpy
     import bmesh
-
+    
     x1=point1[0]
     y1=point1[1]
     z1=point1[2]
     x2=point2[0]
     y2=point2[1]
     z2=point2[2]
-
+    
     dx = x2 - x1
     dy = y2 - y1
     dz = z2 - z1    
     dist = math.sqrt(dx**2 + dy**2 + dz**2)
-
+    
     bpy.ops.mesh.primitive_cylinder_add(
+        vertices = 32, 
         radius = radius, 
         depth = dist,
         location = (dx/2 + x1, dy/2 + y1, dz/2 + z1)   
     ) 
-
+    
     phi = math.atan2(dy, dx) 
     theta = math.acos(dz/dist) 
-
+    
     bpy.context.object.rotation_euler[1] = theta 
     bpy.context.object.rotation_euler[2] = phi 
+        
+    # smooth the surface
+    #bpy.ops.object.modifier_add(type='SUBSURF')
+    bpy.ops.object.shade_smooth()
+
+    # put the origin to the geometry
+    bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='MEDIAN')
+
+    ### Refine the material
+    
+    # check whether the material already exists
+    if bpy.data.materials.get(mat_name):
+        mat = bpy.data.materials[mat_name]
+    else:
+        # create the material
+        mat = bpy.data.materials.new(mat_name)
+        mat.diffuse_color = colour # viewport color RGBA
+        mat.use_nodes = True
+    
+        # get the material nodes
+        nodes = mat.node_tree.nodes
+        
+        # clear all nodes to start clean
+        for node in nodes:
+            nodes.remove(node)
+        
+        # create glossy node
+        node_glossy = nodes.new(type='ShaderNodeBsdfGlossy')
+        node_glossy.inputs[0].default_value = (1,1,1,1)  # RGBA
+        node_glossy.inputs[1].default_value = 0.223 # roughness
+        node_glossy.location = -200,100
+        
+        # create diffuse node
+        node_diffuse = nodes.new(type='ShaderNodeBsdfDiffuse')
+        node_diffuse.inputs[0].default_value = colour  # RGBA
+        node_diffuse.inputs[1].default_value = 0.202 # roughness
+        node_diffuse.location = -200,-100
+        
+        # create mix shader node
+        node_mix = nodes.new(type='ShaderNodeMixShader')
+        node_mix.inputs[0].default_value = 0.925
+        node_mix.location = 0,0
+        
+        # create output node
+        node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+        node_output.location = 200,0
+        
+        # link nodes
+        links = mat.node_tree.links
+        link_diff_mix = links.new(node_diffuse.outputs[0], node_mix.inputs[2])
+        link_gloss_mix = links.new(node_glossy.outputs[0], node_mix.inputs[1])
+        
+        # link mix to output node
+        link_mix_out = links.new(node_mix.outputs[0], node_output.inputs[0])
+    
+    
+    # Assign it to the context object
+    obj = bpy.context.active_object
+    
+    if obj.data.materials:
+        # assign to 1st material slot
+        obj.data.materials[0] = mat
+    else:
+        # no slots
+        obj.data.materials.append(mat)
+
 
 def get_molecule(aseframe):
     import numpy as np
@@ -127,4 +260,4 @@ def draw_type(aseframe,atom_type,radious):
     import numpy as np
     # draw ths spheres for a specific atom type
     for pos in aseframe[np.where(np.asarray(aseframe.get_chemical_symbols())==atom_type)[0]].positions:
-        create_sphere(pos, radious*2)
+        create_sphere(pos, radious*2, atom_type, atom_type)
