@@ -8,7 +8,7 @@ default_properties = {
     "Li": {"colour": (0.8, 0.5019607843137255, 1.0, 1.0), "diameter": 0.5178571428571429}, 
     "Be": {"colour": (0.7607843137254902, 1.0, 0.0, 1.0), "diameter": 0.37500000000000006}, 
     "B" : {"colour": (1.0, 0.7098039215686275, 0.7098039215686275, 1.0), "diameter": 0.3035714285714286}, 
-    "C" : {"colour": (0.5647058823529412, 0.5647058823529412, 0.5647058823529412, 1.0), "diameter": 0.25}, 
+    "C" : {"colour": (0.367, 0.367, 0.367, 1.0), "diameter": 0.25}, 
     "N" : {"colour": (0.18823529411764706, 0.3137254901960784, 0.9725490196078431, 1.0), "diameter": 0.23214285714285718}, 
     "O" : {"colour": (1.0, 0.050980392156862744, 0.050980392156862744, 1.0), "diameter": 0.2142857142857143}, 
     "F" : {"colour": (0.5647058823529412, 0.8784313725490196, 0.3137254901960784, 1.0), "diameter": 0.17857142857142858}, 
@@ -357,8 +357,8 @@ def draw_molecule(aseframe):
     # Draw the the backbone bonds of the molecule
     for bond in b_backb:
         # we need to pass to the function the coordinates of the two ends
-        # use 0.65 the diamter of a carbon and the same material as carbon atoms
-        cylinder_between(aseframe[bond[0]].position,aseframe[bond[1]].position, diameter=default_properties["C"]["diameter"]*0.65, mat_name="C")
+        # use 0.7 the diamter of a carbon and the same material as carbon atoms
+        cylinder_between(aseframe[bond[0]].position,aseframe[bond[1]].position, diameter=default_properties["C"]["diameter"]*0.7, mat_name="C")
         
         
     # Draw the the bonds with hydrogens
