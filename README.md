@@ -91,7 +91,8 @@ A few things to note:
 
 * it is recommended to group atoms of the same type under a new collection. Do this select a group of atoms, type (`m`) and click on (`+ New Collection`)
 * by default we use the CPK colour scheme combined with a standard reflective material. One can manually change or add new materials. An intersting add-on with loads of cool materials is [the materials VX library](https://www.youtube.com/watch?v=EHq39AmRU3Q)
-* if you add a new material and assign it to a specific object you can propagate the to other objects by selecting the target objects and then `CTRL-L > Make Links > Materials`.
+* if you add a new material and assign it to a specific object you can propagate the same material to other objects by selecting the target objects and then pressing `CTRL-L > Make Links > Materials`.
+* to rescale the size of a group of objects without scaling the relative distances (e.g. increase the size of all the oxygens) first select the objects, then, while in the (`Object Mode`) or (`Edit Mode`), set the pivot center to (`Individual Origins`), and finaly press (`s`) and scale the objects. 
 
 ## Possible issues
 
