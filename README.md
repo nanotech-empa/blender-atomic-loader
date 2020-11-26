@@ -65,21 +65,21 @@ import blender_atomic_loader as bl
 frame=read('C33H240Au896.xyz')
 ```
 
-Get the molecule and create the spheres corresponding to the carbon atoms:
+Get the molecule and draw it:
 
 ```python
 # Extract the molecule only
 molecule=bl.get_molecule(frame)
 
 # Draw the molecule 
-bloader.draw_molecule(molecule,'C')
+bl.draw_molecule(molecule,'C')
 ```
 
 Add the substrate by drawing gold atoms:
 
 ```python
 # Draw only Gold atoms 
-bloader.draw_atoms(frame,'Au')
+bl.draw_atoms(frame,'Au')
 ```
 
 Finally, adjust the camera view and lighting and eventually render the image by pressing ('F12'). Here an example using Cycle Render and HDRI lighting:
@@ -88,7 +88,7 @@ Finally, adjust the camera view and lighting and eventually render the image by 
 
 A few things to note:
 
-* it is recommended to group atoms of the same type under a new collection. Do this select a group of atoms, type (`m`) and click on (`New Collection`)
+* it is recommended to group atoms of the same type under a new collection. Do this select a group of atoms, type (`m`) and click on (`+ New Collection`)
 * by default we use the CPK colour scheme combined with a standard reflective material. One can manually change or add new materials. An intersting add-on with loads of cool materials is [the materials VX library](https://www.youtube.com/watch?v=EHq39AmRU3Q)
 * if you add a new material and assign it to a specific object you can propagate the to other objects by selecting the target objects and then `CTRL-L > Make Links > Materials`.
 
