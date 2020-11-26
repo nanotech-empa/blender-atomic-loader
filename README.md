@@ -72,7 +72,7 @@ Get the molecule and draw it:
 molecule=bl.get_molecule(frame)
 
 # Draw the molecule 
-bl.draw_molecule(molecule,'C')
+bl.draw_molecule(molecule)
 ```
 
 Add the substrate by drawing gold atoms:
