@@ -114,7 +114,7 @@ default_properties = {
 }
 
 
-def create_basic_material(mat_name="Material", colour=default_colour):
+def create_basic_material(mat_name='C', colour=default_properties['C']["colour"]):
     import bpy
     import bmesh
     import mathutils
@@ -169,14 +169,14 @@ def create_basic_material(mat_name="Material", colour=default_colour):
     
     return mat
 
-def create_sphere(pos, diameter=default_diameter, atom_name="Atom", mat_name="Material", colour=default_colour):
+def create_sphere(pos=[0,0,0], diameter=default_diameter, label="Atom", mat_name="BasicMaterial", colour=default_colour):
     import bpy
     import bmesh
     import mathutils
     
     # Create an empty mesh and the object.
-    mesh = bpy.data.meshes.new(atom_name)
-    basic_sphere = bpy.data.objects.new(atom_name, mesh)
+    mesh = bpy.data.meshes.new(label)
+    basic_sphere = bpy.data.objects.new(label, mesh)
     
     # Add the object into the scene.
     bpy.context.collection.objects.link(basic_sphere)
@@ -205,7 +205,7 @@ def create_sphere(pos, diameter=default_diameter, atom_name="Atom", mat_name="Ma
     # bpy.ops.object.move_to_collection(collection_index=0, is_new=True, new_collection_name=atom_name)
     
     ### Refine the material
-    mat = create_basic_material(mat_name=mat_name, colour=colour)
+    mat = create_basic_material(mat_name=label, colour=colour)
     
     # Assign it to the context object
     obj = bpy.context.active_object
@@ -338,8 +338,13 @@ def split_bonds(aseframe,cutoff=1.5):
     id_nohbonds=np.where(ll==False)[0]
     return tot_bonds[id_hbonds],tot_bonds[id_nohbonds]
 
-def draw_type(aseframe,atom_type,radious):
+def draw_atoms(aseframe, atom_type):
     import numpy as np
     # draw ths spheres for a specific atom type
     for pos in aseframe[np.where(np.asarray(aseframe.get_chemical_symbols())==atom_type)[0]].positions:
-        create_sphere(pos, radious*2, atom_type, atom_type)
+        create_sphere(pos=pos, 
+                      diameter=default_properties[atom_type]["diameter"], 
+                      label=atom_type, 
+                      mat_name=atom_type, 
+                      colour=default_properties[atom_type]["colour"]
+                      )

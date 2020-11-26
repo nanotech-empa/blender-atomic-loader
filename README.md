@@ -71,8 +71,8 @@ Get the molecule and create the spheres corresponding to the carbon atoms:
 # Extract the molecule only
 molecule=bloader.get_molecule(frame)
 
-# Draw only the carbons with the desired radious
-bloader.draw_type(molecule,'C',0.2)
+# Draw only the carbons
+bloader.draw_atoms(molecule,'C')
 ```
 
 It is recommeded to set the origin at the object's centre (`Object > Set Origin > Origin to Geometry`):
