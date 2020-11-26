@@ -1,5 +1,6 @@
 default_colour = (0.0129016, 0.0129016, 0.0129016, 1)
 default_diameter = 0.25
+default_bond_cutoff = 1.5
 
 default_properties = {
     "H" : {"colour": (1.0, 1.0, 1.0, 1.0), "diameter": 0.08928571428571429}, 
@@ -303,16 +304,7 @@ def get_neighbours(aseframe):
         neigh_list[i]=neighs[1:]
     return neigh_list
 
-def get_bonds(aseframe,cutoff=1.5):
-    import numpy as np
-    # get the distance matrix
-    dist_mat=aseframe.get_all_distances()
-    bond_list={}
-    for i,dists in enumerate(dist_mat):
-        bond_list[i]=[j for j in np.where(dists<1.5)[0] if i!=j]
-    return bond_list
-
-def get_bonds(aseframe,cutoff=1.5):
+def get_bonds(aseframe,cutoff=default_bond_cutoff):
     import numpy as np
     # get the bonds list
     
@@ -320,11 +312,11 @@ def get_bonds(aseframe,cutoff=1.5):
     dist_mat=aseframe.get_all_distances()
     bond_list=[]
     for i,dists in enumerate(dist_mat):
-        bond_list.append([np.sort([i,j]) for j in np.where(dists<1.5)[0] if i!=j])
+        bond_list.append([np.sort([i,j]) for j in np.where(dists<cutoff)[0] if i!=j])
     # returne the list of unique bonds
     return np.asarray(list(set([tuple(i) for i in np.concatenate(bond_list)])))
 
-def split_bonds(aseframe,cutoff=1.5):
+def split_bonds(aseframe,cutoff=default_bond_cutoff):
     import numpy as np
     # split the bonds with hydrogens from those without
     tot_bonds=get_bonds(aseframe,cutoff)
@@ -352,7 +344,25 @@ def draw_atoms(aseframe, atom_type):
 def draw_molecule(aseframe):
     import numpy as np
     
+    # get the set of atomic types
     atom_types = list(set(aseframe.get_chemical_symbols()))
     
+    # loop through the species and draw the spheres
     for atom_type in atom_types:
         draw_atoms(aseframe, atom_type)
+        
+    # Get the bonds and split those involving hydrogens
+    b_hydr,b_backb = split_bonds(aseframe)    
+    
+    # Draw the the backbone bonds of the molecule
+    for bond in b_backb:
+        # we need to pass to the function the coordinates of the two ends
+        # use 0.65 the diamter of a carbon and the same material as carbon atoms
+        cylinder_between(aseframe[bond[0]].position,aseframe[bond[1]].position, diameter=default_properties["C"]["diameter"]*0.65, mat_name="C")
+        
+        
+    # Draw the the bonds with hydrogens
+    for bond in b_hydr:
+        # we need to pass to the function the coordinates of the two ends
+        # use 0.9 the diamter of a hydrogen and the same material as hydrogen atoms
+        cylinder_between(aseframe[bond[0]].position,aseframe[bond[1]].position, diameter=default_properties["H"]["diameter"]*0.9, mat_name="H")
