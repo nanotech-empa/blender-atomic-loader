@@ -82,7 +82,8 @@ Add the substrate by drawing gold atoms:
 bl.draw_atoms(frame,'Au')
 ```
 
-Finally, adjust the camera view and lighting and eventually render the image by pressing ('F12'). Here an example using Cycle Render and HDRI lighting:
+Finally, adjust the camera view and the lighting. To render the image press ('F12'). 
+Here an example using Cycle Render and HDRI lighting:
 
 ![Shade Smooth](.imgs_readme/result.png)
 
