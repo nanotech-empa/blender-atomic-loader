@@ -50,48 +50,50 @@ subprocess.call([python_exe, "-m", "pip", "install", "git+https://github.com/nan
 
 ## Example usage
 
-Follow this simple example to render an image of a triangulene molecule on gold (C33H240Au896.xyz).
+Follow this simple example to render an image of caffeine. An example PDB can be found in the (`examples`) folder.
 
-Load the xyz:
+Load the PDB:
 
 ```python
 # Import libraries
 from ase.io import read
 import numpy as np
-
 import blender_atomic_loader as bl
 
 # Read an example system
-frame=read('C33H240Au896.xyz')
+frame=read('caffeine.pdb')
 ```
 
-Get the molecule and draw it:
+Draw the molecule:
 
 ```python
-# Extract the molecule only
-molecule=bl.get_molecule(frame)
-
 # Draw the molecule 
 bl.draw_molecule(molecule)
 ```
 
-Add the substrate by drawing gold atoms:
+Move the camera pressing (`g`) to position where you desire. Switch to the camera view by pressing (`0`) on the numpad. Pressing (`Shift ~`) allows to refine the camera view even further.  To render the image just press ('F12'):
 
-```python
-# Draw only Gold atoms 
-bl.draw_atoms(frame,'Au')
-```
+![Caffeine basic](.imgs_readme/caffeine_rendered_basic.png)
 
-Finally, adjust the camera view and the lighting. To render the image press ('F12'). 
-Here an example using Cycle Render and HDRI lighting:
+The default result is pretty basic, but not too bad already. We can easily improve it by adding a plane below the molecule pressing (`Shift A`) and then (`Mesh > Plane`). Select the and press (`g`) to move it to the desired position. 
 
-![Shade Smooth](.imgs_readme/result.png)
+From the menu (`Edit > Preferences > Add-ons`) activate [the materials VX library](https://www.youtube.com/watch?v=EHq39AmRU3Q). This will add a new tab (`Material Library VX`) under (`Material Properties`). For example, from (`Sample Materials`) select (`Metallic Paint`) and apply it to the plane:
+
+![Metallic Paint](.imgs_readme/metallic_paint.png)
+
+Now let's remove the lamp (select the lamp and press (`x`) and add some nicer HDRI lighting. We can do this from the shade editor by pressing (`Shift F3`) and adding a Sky texture to our World surface:
+
+![Shade Smooth](.imgs_readme/world_texture.png)
+
+ Once again, to render the image press ('F12'):
+
+![Shade Smooth](.imgs_readme/caffeine_rendered_HDRI.png)
 
 A few things to note:
 
 * it is recommended to group atoms of the same type under a new collection. Do this select a group of atoms, type (`m`) and click on (`+ New Collection`)
 * by default we use the CPK colour scheme combined with a standard reflective material. One can manually change or add new materials. An intersting add-on with loads of cool materials is [the materials VX library](https://www.youtube.com/watch?v=EHq39AmRU3Q)
-* if you add a new material and assign it to a specific object you can propagate the same material to other objects by selecting the target objects and then pressing `CTRL-L > Make Links > Materials`.
+* if you add a new material and assign it to a specific object you can propagate the same material to other objects by selecting the target objects and then pressing (`CTRL-L > Make Links > Materials`)
 * to rescale the size of a group of objects without scaling the relative distances (e.g. increase the size of all the oxygens) first select the objects, then, while in the (`Object Mode`) or (`Edit Mode`), set the pivot center to (`Individual Origins`), and finaly press (`s`) and scale the objects. 
 
 ## Possible issues

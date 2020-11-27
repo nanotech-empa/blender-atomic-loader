@@ -89,7 +89,7 @@ def pybel2ase(mol):
     pos=np.asarray([atm.coords for atm in mol.atoms])
     pca = PCA(n_components=3)
     posnew=pca.fit_transform(pos)
-    posnew[:,2]=0.0
+    #posnew[:,2]=0.0
     atoms = Atoms(species, positions=posnew)
     sys_size = np.ptp(atoms.positions,axis=0)
     atoms.pbc=True
@@ -107,7 +107,7 @@ def rdkit2ase(m):
     pca.fit(pos)
     posnew=pca.transform(pos)        
 #Set the z to 0.0       
-    posnew[:,2]=0.0
+    #posnew[:,2]=0.0
     atoms = Atoms(species, positions=posnew)  
     sys_size = np.ptp(atoms.positions,axis=0)
     atoms.pbc=True
