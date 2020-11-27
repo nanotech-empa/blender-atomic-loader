@@ -71,7 +71,7 @@ Draw the molecule:
 bl.draw_molecule(molecule)
 ```
 
-Move the camera pressing (`g`) to position where you desire. Switch to the camera view by pressing (`0`) on the numpad. Pressing (`Shift ~`) allows to refine the camera view even further.  To render the image just press ('F12'):
+Move the camera pressing (`g`) to position where you desire. Switch to the camera view by pressing (`0`) on the numpad. Pressing (`Shift ~`) allows to refine the camera view even further.  To render the image just press (`F12`):
 
 ![Caffeine basic](.imgs_readme/caffeine_rendered_basic.png)
 
@@ -85,7 +85,7 @@ Now let's remove the lamp (select the lamp and press (`x`) and add some nicer HD
 
 ![Shade Smooth](.imgs_readme/world_texture.png)
 
- Once again, to render the image press ('F12'):
+ Once again, to render the image press (`F12`):
 
 ![Shade Smooth](.imgs_readme/caffeine_rendered_HDRI.png)
 
