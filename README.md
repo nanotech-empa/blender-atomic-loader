@@ -55,9 +55,9 @@ For a quick demonstration of the library, copy and paste the following code to t
 
 ```python
 import blender_atomic_loader as bl
-import ase.build.molecule
-molecule = ase.build.molecule('C6H6')
-bl.draw_molecule(molecule)
+import ase.build.molecule as molecule
+c6h6 = molecule('C6H6')
+bl.draw_molecule(c6h6)
 ```
 
 ### Load molecule from file & draw it
@@ -71,10 +71,10 @@ from ase.io import read
 import blender_atomic_loader as bl
 
 # Read an example system (specify the correct path)
-frame=read('caffeine.pdb')
+caffeine=read('caffeine.pdb')
 
 # Draw the molecule 
-bl.draw_molecule(molecule)
+bl.draw_molecule(caffeine)
 ```
 
 Move the camera pressing (`g`) to position where you desire. Switch to the camera view by pressing (`0`) on the numpad. Pressing (`Shift ~`) allows to refine the camera view even further.  To render the image just press (`F12`):
