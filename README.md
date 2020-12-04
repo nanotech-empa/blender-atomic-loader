@@ -19,6 +19,7 @@ Blender comes with a internal python environment, where the library and it's dep
 A simple way to do this is the following:
 
 1) Only for Windows users: run Blender **with elevated privileges** (run as administrator);
+![Run as administrator](.imgs_readme/run_as_admin.png)
 2) open a "Text Editor" (`Shift F11`) and create an empty script (`+ New`)
 3) Copy and paste the following in the editor (select either Option 1 or 2 by commenting/uncommenting):
 
