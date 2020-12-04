@@ -61,6 +61,8 @@ c6h6 = molecule('C6H6')
 bl.draw_molecule(c6h6)
 ```
 
+That's all. To render your first image just hit (`F12`).
+
 ### Load molecule from file & draw it
 
 Follow this simple example to render an image of caffeine. An example PDB can be found in the (`examples`) folder.
