@@ -85,7 +85,7 @@ Finally, to render the image just press (`F12`):
 
 The default result is pretty basic, but not too bad already. We can easily improve it by adding a plane below the molecule pressing (`Shift A`) and then (`Mesh > Plane`). Select the plane and press (`g`) to move it to the desired position. 
 
-From the menu (`Edit > Preferences > Add-ons`) activate [the materials VX library](https://www.youtube.com/watch?v=EHq39AmRU3Q). This will add a new tab (`Material Library VX`) under (`Material Properties`). For example, from (`Sample Materials`) select (`Metallic Paint`) and apply it to the plane:
+From the menu (`Edit > Preferences > Add-ons`) activate [the materials VX library](https://www.youtube.com/watch?v=EHq39AmRU3Q). This will add a new tab (`Material Library VX`) under (`Material Properties`). [Here a simple tutorial](https://www.youtube.com/watch?v=QvgfUCEThXw&t=26s) on how to activate and use the materials VX library. For example, from the drop down menu select (`Sample Materials`), then scroll the list of pre-defined materials and select (`Metallic Paint`). Cick on the botton (`Apply To Selected`) to apply the chosen pre-defined material to the plane:
 
 ![Metallic Paint](.imgs_readme/metallic_paint.png)
 
