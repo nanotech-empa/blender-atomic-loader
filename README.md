@@ -89,7 +89,7 @@ From the menu (`Edit > Preferences > Add-ons`) activate [the materials VX librar
 
 ![Metallic Paint](.imgs_readme/metallic_paint.png)
 
-Now let's remove the lamp (select the lamp and press (`x`) and add some nicer HDRI lighting. We can do this from the shade editor by pressing (`Shift F3`) and adding a Sky texture to our World surface:
+Now let's remove the lamp (select the lamp and press (`x`) and add some nicer HDRI lighting. For something more advanced follow [this tutorial on youtube](https://www.youtube.com/watch?v=RsAUfQlZH_w). We can keep this simple and just add a (`Sky Texture`) to our World's surface: enter in shade editor by pressing (`Shift F3`), remember to select (`World`) from the drop down menu, remove the default (`Background`) node and add a (`Sky Texture`) to our World surface:
 
 ![Shade Smooth](.imgs_readme/world_texture.png)
 
