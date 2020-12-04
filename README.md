@@ -50,23 +50,29 @@ subprocess.call([python_exe, "-m", "pip", "install", "git+https://github.com/nan
 
 ## Example usage
 
+### Quick demonstration: benzene
+
+For a quick demonstration of the library, copy and paste the following code to the Blender text editor (`Shift F11`). The molecule is pre-defined using the `ase` library.
+
+```python
+import blender_atomic_loader as bl
+import ase.build.molecule
+molecule = ase.build.molecule('C6H6')
+bl.draw_molecule(molecule)
+```
+### Load molecule from file & draw it
+
 Follow this simple example to render an image of caffeine. An example PDB can be found in the (`examples`) folder.
 
 Load the PDB:
 
 ```python
-# Import libraries
 from ase.io import read
-import numpy as np
 import blender_atomic_loader as bl
 
-# Read an example system
+# Read an example system (specify the correct path)
 frame=read('caffeine.pdb')
-```
 
-Draw the molecule:
-
-```python
 # Draw the molecule 
 bl.draw_molecule(molecule)
 ```
@@ -75,7 +81,7 @@ Move the camera pressing (`g`) to position where you desire. Switch to the camer
 
 ![Caffeine basic](.imgs_readme/caffeine_rendered_basic.png)
 
-The default result is pretty basic, but not too bad already. We can easily improve it by adding a plane below the molecule pressing (`Shift A`) and then (`Mesh > Plane`). Select the and press (`g`) to move it to the desired position. 
+The default result is pretty basic, but not too bad already. We can easily improve it by adding a plane below the molecule pressing (`Shift A`) and then (`Mesh > Plane`). Select the plane and press (`g`) to move it to the desired position. 
 
 From the menu (`Edit > Preferences > Add-ons`) activate [the materials VX library](https://www.youtube.com/watch?v=EHq39AmRU3Q). This will add a new tab (`Material Library VX`) under (`Material Properties`). For example, from (`Sample Materials`) select (`Metallic Paint`) and apply it to the plane:
 
