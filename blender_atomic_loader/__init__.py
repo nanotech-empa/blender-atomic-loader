@@ -219,7 +219,7 @@ def create_sphere(pos=[0,0,0], diameter=default_diameter, label="Atom", mat_name
         obj.data.materials.append(mat)
     
     
-def cylinder_between(point1, point2, diameter=default_diameter, mat_name="Material", colour=default_colour):
+def cylinder_between(point1, point2, diameter=default_diameter, label="Bond", mat_name="Material", colour=default_colour):
       
     import math
     import bpy
@@ -263,6 +263,9 @@ def cylinder_between(point1, point2, diameter=default_diameter, mat_name="Materi
     
     # Assign it to the context object
     obj = bpy.context.active_object
+
+    # Rename the object
+    obj.name = label
     
     if obj.data.materials:
         # assign to 1st material slot
@@ -358,11 +361,19 @@ def draw_molecule(aseframe):
     for bond in b_backb:
         # we need to pass to the function the coordinates of the two ends
         # use 0.52 the diamter of a carbon and the same material as carbon atoms
-        cylinder_between(aseframe[bond[0]].position,aseframe[bond[1]].position, diameter=default_properties["C"]["diameter"]*0.52, mat_name="C")
+        cylinder_between(aseframe[bond[0]].position, 
+                         aseframe[bond[1]].position, 
+                         diameter=default_properties["C"]["diameter"]*0.52,
+                         label=aseframe[bond[0]].symbol+"-"+aseframe[bond[1]].symbol+"-bond",
+                         mat_name="C")
         
         
     # Draw the the bonds with hydrogens
     for bond in b_hydr:
         # we need to pass to the function the coordinates of the two ends
         # use 0.7 the diamter of a hydrogen and the same material as hydrogen atoms
-        cylinder_between(aseframe[bond[0]].position,aseframe[bond[1]].position, diameter=default_properties["H"]["diameter"]*0.7, mat_name="H")
+        cylinder_between(aseframe[bond[0]].position,
+                         aseframe[bond[1]].position, 
+                         diameter=default_properties["H"]["diameter"]*0.7, 
+                         label=aseframe[bond[0]].symbol+"-"+aseframe[bond[1]].symbol+"-bond",
+                         mat_name="H")
