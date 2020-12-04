@@ -32,13 +32,12 @@ import os
 exe_name = [string for string in os.listdir(sys.prefix+'/bin/') if 'python' in string][0]
 python_exe = os.path.join(sys.prefix, 'bin', exe_name)
 
-
 # install and upgrade pip
 subprocess.call([python_exe, "-m", "ensurepip"])
 subprocess.call([python_exe, "-m", "pip", "install", "--upgrade", "pip"])
 
 # Option 1: install directly from github
-subprocess.call([python_exe, "-m", "pip", "install", "git+https://github.com/nanotech-empa/blender-atomic-loader.git#egg=blender-atomic-loader"])
+subprocess.call([python_exe, "-m", "pip", "install", "https://github.com/nanotech-empa/blender-atomic-loader/archive/main.zip"])
 
 # Option 2 (developers): install from local source (e.g. from a git clone)
 #subprocess.call([python_exe, "-m", "pip", "install", "-e", "path/to/blender-atomic-loader"])
@@ -60,6 +59,7 @@ import ase.build.molecule
 molecule = ase.build.molecule('C6H6')
 bl.draw_molecule(molecule)
 ```
+
 ### Load molecule from file & draw it
 
 Follow this simple example to render an image of caffeine. An example PDB can be found in the (`examples`) folder.
