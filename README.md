@@ -117,7 +117,7 @@ blender -b test.blend -o output_name -f 1
 
 ## Load a short trajectory and render it 
 
-Follow this simple example to render a short video of LJ38 in vacuum. An example trajectory file can be found in the (`examples`) folder.
+Follow this simple example to render a short video of LJ38 nanocluster in vacuum. An example trajectory file can be found in the (`examples`) folder.
 
 Load the trajectory, draw the atoms and insert the corresponding keyframes:
 
