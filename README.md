@@ -136,7 +136,7 @@ for at_n,at in enumerate(traj[0]):
     # Loop over the trajectory frames
     for i_fr,fr in enumerate(traj):
         obj.location=fr[at_n].position
-        obj.keyframe_insert(data_path="location", frame=(i_fr*2+1))
+        obj.keyframe_insert(data_path="location", frame=(i_fr))
 ```
 
 Select the camera and move it to the desired position. Press (`CTRL + F12`) to render the animation. Follow [this tutorial](https://blender.stackexchange.com/questions/15142/how-to-render-an-animation-as-video-in-blender) to better learn how to set up the render and export the animatio in your favourite video format. You can set to render directly a video, or you can just render a sequence of images. In the case you render a sequence of images, you can encode it into a video using an encoder of your choice. For example, Linux user can do it from the command line using ffmpeg:
