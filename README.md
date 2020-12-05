@@ -115,7 +115,7 @@ When rendering from a laptop it can happen that the memory is not enough to rend
 blender -b test.blend -o output_name -f 1
 ```
 
-### Load a short trajectory and render it 
+## Load a short trajectory and render it 
 
 Follow this simple example to render a short video of LJ38 in vacuum. An example trajectory file can be found in the (`examples`) folder.
 
