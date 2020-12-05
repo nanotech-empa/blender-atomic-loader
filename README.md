@@ -139,4 +139,4 @@ for at_n,at in enumerate(traj[0]):
         obj.keyframe_insert(data_path="location", frame=(i_fr*2+1))
 ```
 
-Select the camera and move it to the desired position. Press (`CTRL + F12`) to render the animation.
+Select the camera and move it to the desired position. Press (`CTRL + F12`) to render the animation. Follow [this tutorial](https://blender.stackexchange.com/questions/15142/how-to-render-an-animation-as-video-in-blender) to better learn how to set up the render and export the animatio in your favourite video format.
