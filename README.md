@@ -61,6 +61,8 @@ c6h6 = molecule('C6H6')
 bl.draw_molecule(c6h6)
 ```
 
+That's all. To render your first image just hit (`F12`).
+
 ### Load molecule from file & draw it
 
 Follow this simple example to render an image of caffeine. An example PDB can be found in the (`examples`) folder.
@@ -78,7 +80,7 @@ caffeine=read('caffeine.pdb')
 bl.draw_molecule(caffeine)
 ```
 
-Move the camera pressing (`g`) to position where you desire. Switch to the camera view by pressing (`0`) on the numpad. Pressing (`Shift ~`) allows to refine the camera view even further. To get rapidly familiar on how to move the camera follow this [simple tutorial on youtube](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjwoN79t7TtAhVB3KQKHZMfDY8QFjABegQIAxAC&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D4HAHY4bWe_E&usg=AOvVaw3HVpWgyK7mtSwXKoven1ZU).
+Select the camera. After selecting the camera move it pressing (`g`) to the desired position. Switch to the camera view by pressing (`0`) on the numpad. Pressing (`Shift ~`) allows to refine the camera view even further. To get rapidly familiar on how to move the camera follow this [simple tutorial on youtube](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjwoN79t7TtAhVB3KQKHZMfDY8QFjABegQIAxAC&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D4HAHY4bWe_E&usg=AOvVaw3HVpWgyK7mtSwXKoven1ZU).
 
 Finally, to render the image just press (`F12`):
 
