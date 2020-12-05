@@ -114,3 +114,29 @@ When rendering from a laptop it can happen that the memory is not enough to rend
 ```bash
 blender -b test.blend -o output_name -f 1
 ```
+
+### Load a short trajectory and render it 
+
+Follow this simple example to render a short video of LJ38 in vacuum. An example trajectory file can be found in the (`examples`) folder.
+
+Load the trajectory, draw the atoms and insert the corresponding key frames:
+
+```python
+import blender_atomic_loader as bl
+from ase.io import read
+
+# Load the trajectory with ASE
+traj=read("example/lj38-trajectory.pdb",":")
+
+# Loop over the atoms
+for at_n,at in enumerate(traj[0]):
+    # create a sphere for each atom
+    bl.create_sphere()
+    obj = bpy.context.active_object
+    # Loop over the trajectory frames
+    for i_fr,fr in enumerate(traj):
+        obj.location=fr[at_n].position
+        obj.keyframe_insert(data_path="location", frame=(i_fr*2+1))
+```
+
+Select the camera and move it to the desired position. Press (`CTRL + F12`) to render the animation.
