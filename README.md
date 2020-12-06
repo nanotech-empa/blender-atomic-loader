@@ -149,6 +149,6 @@ ffmpeg -r 25 -i %04d.png -c:v libx264 -vf fps=25 -pix_fmt yuv420p out.mp4
 
 Here an example result:
 
-![](.imgs_readme/LJ38_test.mp4)
+![Video](.imgs_readme/LJ38_test.mp4)
 
 Follow [this tutorial](https://blender.stackexchange.com/questions/15142/how-to-render-an-animation-as-video-in-blender) to better learn how to set up the render and export the animatio in your favourite video format.
