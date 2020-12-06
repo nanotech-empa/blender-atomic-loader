@@ -129,16 +129,26 @@ traj=read("example/lj38-trajectory.pdb",":")
 # Loop over the atoms
 for at_n,at in enumerate(traj[0]):
     # create a sphere for each atom
-    bl.create_sphere()
+    bl.create_sphere(diameter=0.65)
     obj = bpy.context.active_object
     # Loop over the trajectory frames
     for i_fr,fr in enumerate(traj):
         obj.location=fr[at_n].position
         obj.keyframe_insert(data_path="location", frame=(i_fr))
+        
+# Adjust camera's location
+scene = bpy.data.scenes["Scene"]
+scene.camera.location=[11,-8,9]
 ```
 
-Select the camera and move it to the desired position. Press (`CTRL + F12`) to render the animation. Follow [this tutorial](https://blender.stackexchange.com/questions/15142/how-to-render-an-animation-as-video-in-blender) to better learn how to set up the render and export the animatio in your favourite video format. You can instruct Blender to render directly a video, or you can just render a sequence of images. In the case you render a sequence of images, you can encode it into a video using an encoder of your choice. For example, Linux user can do it from the command line using ffmpeg:
+Press (`CTRL + F12`) or select the menu (`Render > Render Animation`) to render the animation. Before rendering check the properties of the video in the properties window (`Shif + F7`), under the (`Output Properties`) Tab and define your desired final resulution and the output path. You can instruct Blender to render directly a video, or you can just render a sequence of images. In the case you render a sequence of images, you can encode it into a video using an encoder of your choice. For example, Linux user can do it from the command line using ffmpeg:
 
 ```bash
 ffmpeg -r 25 -i %04d.png -c:v libx264 -vf fps=25 -pix_fmt yuv420p out.mp4
 ```
+
+Here an example result:
+
+![](LJ38_test.mp4)
+
+Follow [this tutorial](https://blender.stackexchange.com/questions/15142/how-to-render-an-animation-as-video-in-blender) to better learn how to set up the render and export the animatio in your favourite video format.
