@@ -1,6 +1,6 @@
 default_colour = (0.0129016, 0.0129016, 0.0129016, 1)
 default_diameter = 0.25
-default_bond_cutoff = 1.5
+default_bond_cutoff = 1.7
 
 default_properties = {
     "H": {"colour": (1.0, 1.0, 1.0, 1.0), "diameter": 0.1652},
