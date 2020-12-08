@@ -141,7 +141,7 @@ scene = bpy.data.scenes["Scene"]
 scene.camera.location=[11,-8,9]
 ```
 
-Press (`CTRL + F12`) or select the menu (`Render > Render Animation`) to render the animation. Before rendering check the properties of the video in the properties window (`Shif + F7`), under the (`Output Properties`) Tab and define your desired final resulution and the output path. You can instruct Blender to render directly a video, or you can just render a sequence of images. In the case you render a sequence of images, you can encode it into a video using an encoder of your choice. For example, Linux user can do it from the command line using ffmpeg:
+Press (`CTRL + F12`) or select the menu (`Render > Render Animation`) to render the animation. Before rendering check the properties of the video in the properties window (`Shif + F7`), under the (`Output Properties`) Tab and define your desired final resulution and the output path. You can instruct Blender to render directly a video, or you can just render a sequence of images. In the case you render a sequence of images, you can encode it into a video using an encoder of your choice. For example, Linux user can do it from the command line using ffmpeg (assuming the naming of the output images is in the format `0000.png`):
 
 ```bash
 ffmpeg -r 25 -i %04d.png -c:v libx264 -vf fps=25 -pix_fmt yuv420p out.mp4
