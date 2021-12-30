@@ -317,6 +317,7 @@ def get_bonds(aseframe,cutoff=default_bond_cutoff):
     for i,dists in enumerate(dist_mat):
         bond_list.append([np.sort([i,j]) for j in np.where(dists<cutoff)[0] if i!=j])
     # returne the list of unique bonds
+    bond_list = [x for x in bond_list if x != []]
     return np.asarray(list(set([tuple(i) for i in np.concatenate(bond_list)])))
 
 def split_bonds(aseframe,cutoff=default_bond_cutoff):
